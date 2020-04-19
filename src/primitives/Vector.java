@@ -4,35 +4,39 @@ package primitives;
  * Created by yona on 26/03/2017.
  */
 //  this class represent a vector for 3 dimensions X, Y and Z
-public class Vector implements Comparable<Vector>{
-    @Override
+public class Vector {
+
 
 
     /**
      * vector represented by the head point (Point3D)
      */
-    private Point3D Head;
+     Point3D _head;
 
     // ***************** Constructors ********************** //
-    //default constructor
-    public Vector(){
-        Head = new Point3D();
-    }
+
 //constructor that receive a 3D variable
-    public Vector(Point3D head){
-        Head = new Point3D(head);
+public Vector(Point3D point) {
+    if (point.equals(Point3D.ZERO)) {
+        throw new IllegalArgumentException("Point3D(0.0,0.0,0.0) not valid for vector head");
     }
+    this._head = new Point3D(point._x._coord, point._y._coord, point._z._coord);
+}
 
     /**
-     * copy constractor
+     * copy constructor
      * @param vector
      */
+
     public Vector(Vector vector){
-        this(vector.Head);
+        this(vector._head);
     }
-//constructor that receive 3 double variable and put them to be the coordinates X, Y and Z for the head of the vector
+
+
+    //constructor that receive 3 double variable and put them to be the coordinates X, Y and Z for the head of the vector
+
     public Vector(double xHead, double yHead, double zHead){
-        Head = new Point3D(xHead, yHead, zHead);
+        _head = new Point3D(xHead, yHead, zHead);
     }
 
     /**
@@ -41,28 +45,23 @@ public class Vector implements Comparable<Vector>{
      * @param p1
      * @param p2
      */
-    public Vector(Point3D p1, Point3D p2){
-        Point3D p = new Point3D(p1);
-        Vector tmp = new Vector(p2);
-        p.subtract(tmp);
-        Head = new Point3D(p);
+    public Vector(Point3D p1, Point3D p2) {
+        this(p1.subtract(p2));
     }
+    //***** ***************** toString ********************** //
 
     public String toString() {
         return "Vector{" +
-                "Head=" + Head +
+                "Head=" + _head +
                 '}';
     }
     // ***************** Getters/Setters ********************** //
-    public void setHead(Point3D head) {
-        Head = new Point3D(head);
+
+    public Point3D get_head() {
+        return new Point3D(_head);
     }
 
-    public Point3D getHead() {
-        return new Point3D(Head);
-    }
-
-    // ***************** Administration ******************** //
+    // ***************** Administration *********************** //
 
     /**
      * override of toString
@@ -71,13 +70,16 @@ public class Vector implements Comparable<Vector>{
 
     /**
      * this function compare if the 2 vectors are equal.
-     * @param vector
+     * @param o
      * @return if they equal the function return 0(zero), if they aren't the
     function return -1
      */
     @Override
-    public int compareTo(Vector vector) {
-        return this.getHead().compareTo(vector.getHead());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vector vector = (Vector) o;
+        return _head.equals(vector._head);
     }
 
     // ***************** Operations ******************** //
@@ -88,7 +90,7 @@ public class Vector implements Comparable<Vector>{
      * @param vector
      */
     public void add(Vector vector) {
-        this.Head.add(vector);
+        this._head.add(vector);
     }
 
     /**
@@ -96,8 +98,8 @@ public class Vector implements Comparable<Vector>{
      this.X - X, this.Y - Y and this.Z - Z
      * @param vector
      */
-public void subtract(Vector vector) {
-     this.Head.subtract(vector);
+    public Vector subtract(Vector vector) {
+        return  this._head.subtract(vector._head);
     }
 
     /**
@@ -105,10 +107,12 @@ public void subtract(Vector vector) {
      * that means: that each coordinate are multiplied by the variable scalingFactor
      * @param scalingFactor
      */
-    public void scale(double scalingFactor) {
-        this.Head._x.setCoordinate(this.Head._x.getCoordinate() * scalingFactor);
-        this.Head._y.setCoordinate(this.Head._y.getCoordinate() * scalingFactor);
-        this.Head.getZ().setCoordinate(this.Head.getZ().getCoordinate() * scalingFactor);
+    public Vector scale(double scalingFactor) {
+        return new Vector(
+                new Point3D(
+                        new Coordinate(scalingFactor * _head._x._coord),
+                        new Coordinate(scalingFactor * _head._y._coord),
+                        new Coordinate(scalingFactor * _head._z._coord)));
     }
 
     /**
@@ -118,10 +122,23 @@ public void subtract(Vector vector) {
      * @return new vector c = a x b = (b1*c2 - c1*b2, c1*a2 - a1*c2, a1*b2 - b1*a2)
      */
     public Vector crossProduct(Vector vector) {
-        Vector v = new Vector(this.Head._y.getCoordinate()*vector.Head.getZ().getCoordinate() - this.Head.getZ().getCoordinate()*vector.Head._y.getCoordinate(),
-                  this.Head.getZ().getCoordinate()*vector.Head._x.getCoordinate() - this.Head._x.getCoordinate()*vector.Head.getZ().getCoordinate(),
-                this.Head._x.getCoordinate()*vector.Head._y.getCoordinate() - this.Head._y.getCoordinate()*vector.Head._x.getCoordinate());
-        return v;
+        double w1 = this._head._y._coord * vector._head._z._coord - this._head._z._coord * vector._head._y._coord;
+        double w2 = this._head._z._coord * vector._head._x._coord - this._head._x._coord * vector._head._z._coord;
+        double w3 = this._head._x._coord * vector._head._y._coord - this._head._y._coord * vector._head._x._coord;
+
+        return new Vector(new Point3D(w1, w2, w3));
+    }
+    /**
+     *returns the the square of the length of the vector
+     */
+
+    public double lengthSquared() {
+        double xx = this._head._x._coord * this._head._x._coord;
+        double yy = this._head._y._coord * this._head._y._coord;
+        double zz = this._head._z._coord * this._head._z._coord;
+
+        return xx + yy + zz;
+
     }
 
     /**
@@ -129,7 +146,7 @@ public void subtract(Vector vector) {
      * @return  √(a^2 + b^2 + c^2)
      */
     public double length() {
-        return Math.sqrt(Math.pow(Head._x.getCoordinate(),2) + Math.pow(Head._y.getCoordinate(),2)+Math.pow(Head.getZ().getCoordinate(),2));
+        return Math.sqrt(lengthSquared());
     }
 
     /**
@@ -137,13 +154,31 @@ public void subtract(Vector vector) {
      * correct vector and ||u|| is the norm (or length) of u).
      * Throws exception if length = 0
      */
-    public void normalize() throws ArithmeticException{
-           if (this.length() == 0)
-           {
-           throw new ArithmeticException("The length is 0");
+    public Vector normalize() {
+
+        double x = this._head._x._coord;
+        double y = this._head._y._coord;
+        double z = this._head._z._coord;
+
+        double length = this.length();
+
+        if (length == 0)
+            throw new ArithmeticException("divide by Zero");
+
+        this._head._x = new Coordinate(x / length);
+        this._head._y = new Coordinate(y / length);
+        this._head._z = new Coordinate(z / length);
+
+        return this;
     }
-        this.scale(1/this.length());
+
+
+    public Vector normalized() {
+        Vector vector = new Vector(this);
+        vector.normalize();
+        return vector;
     }
+
 
     /**
      * Gets vector (a2, b2, c2) and the correct vector (a1, b1, c1)
@@ -151,6 +186,9 @@ public void subtract(Vector vector) {
      * @return a1*a2 + b1*b2 + c1*c2
      */
     public double dotProduct(Vector vector) {
-        return this.Head._x.getCoordinate()*vector.Head._x.getCoordinate() + this.Head._y.getCoordinate()*vector.Head._y.getCoordinate() + this.Head.getZ().getCoordinate()*vector.Head.getZ().getCoordinate();
+        return (this._head._x._coord * vector._head._x._coord +
+                this._head._y._coord * vector._head._y._coord +
+                this._head._z._coord * vector._head._z._coord);
     }
+
 }

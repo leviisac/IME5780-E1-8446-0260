@@ -25,6 +25,8 @@ public final class Coordinate {
         _coord = alignZero(coord);
     }
 
+
+
     /**
      * Copy constructor for coordinate
      * 
@@ -39,7 +41,7 @@ public final class Coordinate {
      * 
      * @return coordinate value
      */
-    public double get() {
+    public double getCoordinate() {
         return _coord;
     }
 
