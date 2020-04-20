@@ -9,7 +9,7 @@ import primitives.Vector;
 //this class represent a sphere
 
 
-public class Sphere extends RadialGeometry implements Geometry{
+public class Sphere extends RadialGeometry{
 
 
     @Override
