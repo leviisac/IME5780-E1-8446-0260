@@ -1,3 +1,8 @@
+/**
+ * Created by Levi and David.
+ * 988446 and 100260
+ */
+
 package geometries;
 
 import primitives.Ray;
@@ -11,7 +16,7 @@ import java.util.List;
 //this class represent a sphere
 
 
-public class Sphere extends RadialGeometry{
+public class Sphere extends RadialGeometry implements Intersectable{
 
 
 
@@ -35,10 +40,6 @@ public class Sphere extends RadialGeometry{
     // ***************** Operations ******************** //
 
     /*************************************************
-
-     * PARAMETERS:
-     * Ray - (the ray come from the camera)
-     *
      * RETURN VALUE:
      * A list with all the points that the ray hurt the sphere
      * if the ray not hurt any point in the sphere
@@ -48,7 +49,8 @@ public class Sphere extends RadialGeometry{
      * This functions calculate all the points that the ray hurt the
      * sphere
      **************************************************/
-    public List<Point3D> FindIntersections(Ray ray) {
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
 
         ray.get_direction().normalize();
         ArrayList<Point3D> list =new ArrayList<Point3D>();
@@ -85,4 +87,7 @@ public class Sphere extends RadialGeometry{
         normal.normalize();
         return normal;
     }
+
+
+
 }

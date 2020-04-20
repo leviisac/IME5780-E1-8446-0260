@@ -1,8 +1,6 @@
 package primitives;
 
-/**
- * Created by Moishe on 04/04/2017.
- */
+
 
 /**
  * this class represent a ray :
@@ -10,36 +8,37 @@ package primitives;
  * (called the endpoint) and extends endlessly in one direction
  */
 public class Ray {
-    /**
-     * Point of origin
-     */
+
+
     private Point3D _POO;
-    /**
-     * Ray direction
-      */
     private Vector _direction;
-    /**
-     * ***************** Constructors ********************** //
+
+
+     /****************** Constructors ********************** //
       */
 
-    /**
-     *   default constructor
-     */
 
-    public Ray()
-    {};
     /**
      *  constructor that receive a Ray variable that contains the point of origin and the direction
      */
     public Ray(Ray ray){
-        this(ray._POO,ray._direction);
+        this._POO = ray.get_POO();
+        this._direction = ray.get_direction();
     }
-    public Ray(Point3D poo, Vector direction)
-    {
-        _POO = new Point3D(poo);
-        _direction = new Vector(direction);
 
+    /**
+     *constructor
+     * @param _POO
+     * @param _direction
+     */
+    public Ray(Point3D _POO, Vector _direction) {
+        this.set_POO(_POO);
+        this.set_direction(_direction);
+        this._direction.normalize();
     }
+
+
+
     /**
      * ***************** Getters/Setters ********************** //
       */

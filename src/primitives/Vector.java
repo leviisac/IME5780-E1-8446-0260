@@ -1,8 +1,11 @@
+/**
+ * Created by Levi and David.
+ * 988446 and 100260
+ */
+
 package primitives;
 
-/**
- * Created by yona on 26/03/2017.
- */
+
 //  this class represent a vector for 3 dimensions X, Y and Z
 public class Vector {
 

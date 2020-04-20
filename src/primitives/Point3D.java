@@ -2,6 +2,7 @@ package primitives;
 
 /**
  * Created by Levi and David.
+ * 988446 and 100260
  */
 
 //  this class represent a point for 3 dimensions X, Y and Z
@@ -93,6 +94,7 @@ public class Point3D  {
                 this._y._coord - vector._y._coord,
                 this._z._coord - vector._z._coord));
     }
+
 
 
     /**

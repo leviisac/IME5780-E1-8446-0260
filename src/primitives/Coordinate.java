@@ -1,5 +1,11 @@
 package primitives;
 
+/**
+ * Created by Levi and David.
+ * 988446 and 100260
+ */
+
+
 import static primitives.Util.*;
 
 /**
@@ -57,5 +63,9 @@ public final class Coordinate {
     @Override
     public String toString() {
         return "" + _coord;
+    }
+
+    public double get() {
+        return _coord;
     }
 }
