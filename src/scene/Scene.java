@@ -3,7 +3,10 @@ package scene;
 import elements.AmbientLight;
 import elements.Camera;
 import geometries.Geometrys;
+import geometries.Intersectable;
 import primitives.Color;
+
+import java.util.ArrayList;
 
 /**
  * scene class
@@ -23,7 +26,6 @@ public class Scene {
     private Geometrys _geometries;
     private Camera _camera;
     private double _distance;
-    private List<LightSource>_lights;
 
     /**
      * constructor
@@ -34,8 +36,7 @@ public class Scene {
      */
     public Scene(String _name) {
         this._name = _name;
-        _geometries = new Geometries();
-        _lights = new ArrayList<>();
+        _geometries = new Geometrys(new ArrayList<>());
     }
 
 
@@ -52,7 +53,7 @@ public class Scene {
         return _ambientLight;
     }
 
-    public Geometries getGeometries() {
+    public Geometrys getGeometries() {
         return _geometries;
     }
 
@@ -64,9 +65,6 @@ public class Scene {
         return _distance;
     }
 
-    public List<LightSource> getLights() {
-        return _lights;
-    }
 
     public void setBackground(Color _background) {
         this._background = _background;
@@ -91,14 +89,13 @@ public class Scene {
      * @param geometries one or more geometries, such sphere or triangle
      */
     public void addGeometry(Intersectable... geometries) {
-        _geometries.add(geometries);
+        if(geometries == null)
+            return;
+        for(Intersectable geometry :geometries )
+            _geometries.addGeometry(geometry);
     }
 
-    public void addLightSource(LightSource... lightSources){
-        for (LightSource l : lightSources){
-            _lights.add(l);
-        }
-    }
+
 
 
 }
