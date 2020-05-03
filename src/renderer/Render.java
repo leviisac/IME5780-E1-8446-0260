@@ -16,6 +16,9 @@ import Primitives.Point3D;
 import Primitives.Ray;
 import Primitives.Vector;
 import Scene.Scene;
+import geometries.Geometry;
+import primitives.Point3D;
+import primitives.Ray;
 import scene.Scene;
 
 public class Render {
