@@ -39,6 +39,14 @@ public class Scene {
         _geometries = new Geometrys(new ArrayList<>());
     }
 
+    public Scene(Scene other) {
+        this._name = other._name;
+        this._background = other._background;
+        this._ambientLight = other._ambientLight;
+        this._geometries = other._geometries;
+        this._camera = other._camera;
+        this._distance = other._distance;
+    }
 
     //region ***********************getters/setters***************
     public String getSceneName() {
