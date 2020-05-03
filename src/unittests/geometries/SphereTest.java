@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SphereTest {
 
 
-    Sphere sphere = new Sphere(1d, new Point3D(1, 0, 0));
+    private Sphere sphere = new Sphere(1d, new Point3D(1, 0, 0));
 
     @Test
     void getNormalTest1() {

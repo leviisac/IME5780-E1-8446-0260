@@ -69,10 +69,9 @@ public class Scene {
         return _camera;
     }
 
-    public double getDistCameraScreen() {
+    public double get_distance() {
         return _distance;
     }
-
 
     public void setBackground(Color _background) {
         this._background = _background;

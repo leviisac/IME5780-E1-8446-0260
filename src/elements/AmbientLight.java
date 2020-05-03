@@ -1,8 +1,7 @@
 package elements;
 
-import java.awt.Color;
-import java.util.Map;
 
+import primitives.Color;
 
 //this class is responsible to light of the ambient
 public class AmbientLight {
@@ -26,10 +25,10 @@ public class AmbientLight {
     public double getKa(){
         return _Ka;
     }
-    public Color getIntensity(){
-        int r = Math.min(255,(int)(_intensity.getRed()*_Ka));
-        int g = Math.min(255,(int)(_intensity.getGreen()*_Ka));
-        int b = Math.min(255,(int)(_intensity.getBlue()*_Ka));
+    public primitives.Color getIntensity(){
+        int r = Math.min(255,(int)(_intensity.getColor().getRed()*_Ka));
+        int g = Math.min(255,(int)(_intensity.getColor().getGreen()*_Ka));
+        int b = Math.min(255,(int)(_intensity.getColor().getBlue()*_Ka));
         return new Color(r,g,b);
     }
 }
